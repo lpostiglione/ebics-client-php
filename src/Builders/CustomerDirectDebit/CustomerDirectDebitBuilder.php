@@ -155,6 +155,10 @@ class CustomerDirectDebitBuilder
 		$xmlFinInstnId = $this->instance->createElement('FinInstnId');
 		$xmlCdtrAgt->appendChild($xmlFinInstnId);
 
+		$xmlChrgBr = $this->instance->createElement('ChrgBr');
+		$xmlChrgBr->nodeValue = 'SLEV';
+		$xmlPmtInf->appendChild($xmlChrgBr);
+
 		$xmlCdtrSchmeId = $this->instance->createElement('CdtrSchmeId');
 		$xmlPmtInf->appendChild($xmlCdtrSchmeId);
 
@@ -168,16 +172,13 @@ class CustomerDirectDebitBuilder
 		$xmlPrvtId->appendChild($xmlCdtrSchmeIdOthr);
 
 		$xmlCdtrSchmeIdIdId = $this->instance->createElement('Id');
-		$xmlCdtrSchmeIdOthr->nodeValue = $creditorId;
+		$xmlCdtrSchmeIdIdId->nodeValue = $creditorId;
 		$xmlCdtrSchmeIdOthr->appendChild($xmlCdtrSchmeIdIdId);
 
 		$xmlBIC = $this->instance->createElement('BIC');
 		$xmlBIC->nodeValue = $creditorFinInstBIC;
 		$xmlFinInstnId->appendChild($xmlBIC);
 
-		$xmlChrgBr = $this->instance->createElement('ChrgBr');
-		$xmlChrgBr->nodeValue = 'SLEV';
-		$xmlPmtInf->appendChild($xmlChrgBr);
 
 		return $this;
 	}
