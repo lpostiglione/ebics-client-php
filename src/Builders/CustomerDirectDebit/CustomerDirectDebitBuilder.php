@@ -34,13 +34,14 @@ class CustomerDirectDebitBuilder
         $this->randomService = new RandomService();
     }
 
-    public function createInstance(
-        string $creditorFinInstBIC,
-        string $creditorIBAN,
-        string $creditorName
-    ): CustomerDirectDebitBuilder {
-        $this->instance = new CustomerDirectDebit();
-        $now = new DateTime();
+	public function createInstance(
+		string $creditorFinInstBIC,
+		string $creditorIBAN,
+		string $creditorName,
+		string $creditorId
+	): CustomerDirectDebitBuilder {
+		$this->instance = new CustomerDirectDebit();
+		$now = new DateTime();
 
         $xmDocument = $this->instance->createElementNS(
             'urn:iso:std:iso:20022:tech:xsd:pain.008.001.02',
@@ -154,9 +155,25 @@ class CustomerDirectDebitBuilder
         $xmlFinInstnId = $this->instance->createElement('FinInstnId');
         $xmlCdtrAgt->appendChild($xmlFinInstnId);
 
-        $xmlBIC = $this->instance->createElement('BIC');
-        $xmlBIC->nodeValue = $creditorFinInstBIC;
-        $xmlFinInstnId->appendChild($xmlBIC);
+		$xmlCdtrSchmeId = $this->instance->createElement('CdtrSchmeId');
+		$xmlPmtInf->appendChild($xmlCdtrSchmeId);
+
+		$xmlCdtrSchmeIdId = $this->instance->createElement('Id');
+		$xmlCdtrSchmeId->appendChild($xmlCdtrSchmeIdId);
+
+		$xmlPrvtId = $this->instance->createElement('PrvtId');
+		$xmlCdtrSchmeIdId->appendChild($xmlPrvtId);
+
+		$xmlCdtrSchmeIdOthr = $this->instance->createElement('Othr');
+		$xmlPrvtId->appendChild($xmlCdtrSchmeIdOthr);
+
+		$xmlCdtrSchmeIdIdId = $this->instance->createElement('Id');
+		$xmlCdtrSchmeIdOthr->nodeValue = $creditorId;
+		$xmlCdtrSchmeIdOthr->appendChild($xmlCdtrSchmeIdIdId);
+
+		$xmlBIC = $this->instance->createElement('BIC');
+		$xmlBIC->nodeValue = $creditorFinInstBIC;
+		$xmlFinInstnId->appendChild($xmlBIC);
 
         $xmlChrgBr = $this->instance->createElement('ChrgBr');
         $xmlChrgBr->nodeValue = 'SLEV';
