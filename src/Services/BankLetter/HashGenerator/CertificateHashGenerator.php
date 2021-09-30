@@ -8,31 +8,32 @@ use AndrewSvirin\Ebics\Services\DigestResolver;
 
 /**
  * Generate hash for certificate.
+ *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  *
  * @internal
  */
 class CertificateHashGenerator implements HashGeneratorInterface
 {
 
-    /**
-     * @var DigestResolver
-     */
-    private $digestResolver;
+	/**
+	 * @var DigestResolver
+	 */
+	private $digestResolver;
 
-    public function __construct(DigestResolver $digestResolver)
-    {
-        $this->digestResolver = $digestResolver;
-    }
+	public function __construct(DigestResolver $digestResolver)
+	{
+		$this->digestResolver = $digestResolver;
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function generate(SignatureInterface $signature): string
-    {
-        $digest = $this->digestResolver->digest($signature);
+	/**
+	 * @inheritDoc
+	 */
+	public function generate(SignatureInterface $signature): string
+	{
+		$digest = $this->digestResolver->digest($signature);
 
-        return bin2hex($digest);
-    }
+		return bin2hex($digest);
+	}
 }

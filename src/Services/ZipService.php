@@ -9,86 +9,88 @@ use ZipArchive;
  * Read zipped content.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  *
  * @internal
  */
 class ZipService
 {
 
-    /**
-     * Create temporary file to store zipped string.
-     * @return string
-     */
-    private function createTmpFile(): string
-    {
-        if (!($path = tempnam(sys_get_temp_dir(), 'ebics-file'))) {
-            throw new RuntimeException('Can not create temporary dir.');
-        }
-        return $path;
-    }
+	/**
+	 * Create temporary file to store zipped string.
+	 *
+	 * @return string
+	 */
+	private function createTmpFile(): string
+	{
+		if (!($path = tempnam(sys_get_temp_dir(), 'ebics-file'))) {
+			throw new RuntimeException('Can not create temporary dir.');
+		}
 
-    /**
-     * Read zipped string and extract file content items.
-     *
-     * @param string $zippedContent
-     *
-     * @return array
-     */
-    public function extractFilesFromString(string $zippedContent): array
-    {
-        // save content into temp file
-        $tempFile = $this->createTmpFile();
-        file_put_contents($tempFile, $zippedContent);
+		return $path;
+	}
 
-        $zip = new ZipArchive();
-        if (true !== $zip->open($tempFile)) {
-            throw new RuntimeException('Zip archive was not opened.');
-        }
+	/**
+	 * Read zipped string and extract file content items.
+	 *
+	 * @param string $zippedContent
+	 *
+	 * @return array
+	 */
+	public function extractFilesFromString(string $zippedContent): array
+	{
+		// save content into temp file
+		$tempFile = $this->createTmpFile();
+		file_put_contents($tempFile, $zippedContent);
 
-        // Read zipped order data items.
-        $fileContentItems = [];
-        for ($i = 0; $i < $zip->numFiles; $i++) {
-            $fileContentItems[] = $zip->getFromIndex($i);
-        }
+		$zip = new ZipArchive();
+		if (true !== $zip->open($tempFile)) {
+			throw new RuntimeException('Zip archive was not opened.');
+		}
 
-        // Close zip.
-        $zip->close();
-        // Remove temporary file.
-        unlink($tempFile);
+		// Read zipped order data items.
+		$fileContentItems = [];
+		for ($i = 0; $i < $zip->numFiles; $i++) {
+			$fileContentItems[] = $zip->getFromIndex($i);
+		}
 
-        return $fileContentItems;
-    }
+		// Close zip.
+		$zip->close();
+		// Remove temporary file.
+		unlink($tempFile);
 
-    /**
-     * Uncompress from gz.
-     *
-     * @param string $compressed
-     *
-     * @return string
-     */
-    public function uncompress(string $compressed)
-    {
-        if (!($uncompressed = gzuncompress($compressed))) {
-            throw new RuntimeException('Data can not be uncompressed.');
-        }
+		return $fileContentItems;
+	}
 
-        return $uncompressed;
-    }
+	/**
+	 * Uncompress from gz.
+	 *
+	 * @param string $compressed
+	 *
+	 * @return string
+	 */
+	public function uncompress(string $compressed)
+	{
+		if (!($uncompressed = gzuncompress($compressed))) {
+			throw new RuntimeException('Data can not be uncompressed.');
+		}
 
-    /**
-     * Compress to gz.
-     *
-     * @param string $uncompressed
-     *
-     * @return string
-     */
-    public function compress(string $uncompressed)
-    {
-        if (!($compressed = gzcompress($uncompressed))) {
-            throw new RuntimeException('Data can not be compressed.');
-        }
+		return $uncompressed;
+	}
 
-        return $compressed;
-    }
+	/**
+	 * Compress to gz.
+	 *
+	 * @param string $uncompressed
+	 *
+	 * @return string
+	 */
+	public function compress(string $uncompressed)
+	{
+		if (!($compressed = gzcompress($uncompressed))) {
+			throw new RuntimeException('Data can not be compressed.');
+		}
+
+		return $compressed;
+	}
 }

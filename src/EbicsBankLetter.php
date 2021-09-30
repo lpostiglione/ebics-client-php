@@ -20,84 +20,84 @@ use LogicException;
  * Initialization letter details.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 final class EbicsBankLetter
 {
-    /**
-     * @var BankLetterService
-     */
-    private $bankLetterService;
+	/**
+	 * @var BankLetterService
+	 */
+	private $bankLetterService;
 
-    /**
-     * @var BankLetterFactory
-     */
-    private $bankLetterFactory;
+	/**
+	 * @var BankLetterFactory
+	 */
+	private $bankLetterFactory;
 
-    public function __construct()
-    {
-        $this->bankLetterService = new BankLetterService();
-        $this->bankLetterFactory = new BankLetterFactory();
-    }
+	public function __construct()
+	{
+		$this->bankLetterService = new BankLetterService();
+		$this->bankLetterFactory = new BankLetterFactory();
+	}
 
-    /**
-     * Prepare variables for bank letter.
-     * On this moment should be called INI and HEA.
-     *
-     * @param Bank $bank
-     * @param User $user
-     * @param KeyRing $keyRing
-     *
-     * @return BankLetter
-     */
-    public function prepareBankLetter(Bank $bank, User $user, KeyRing $keyRing): BankLetter
-    {
-        if ($bank->isCertified()) {
-            if (Bank::VERSION_25 === $bank->getVersion()) {
-                $digestResolver = new DigestResolverV2();
-            } elseif (Bank::VERSION_30 === $bank->getVersion()) {
-                $digestResolver = new DigestResolverV3();
-            } else {
-                throw new LogicException(sprintf('Version "%s" is not implemented', $bank->getVersion()));
-            }
-            $hashGenerator = new CertificateHashGenerator($digestResolver);
-        } else {
-            $hashGenerator = new PublicKeyHashGenerator();
-        }
+	/**
+	 * Prepare variables for bank letter.
+	 * On this moment should be called INI and HEA.
+	 *
+	 * @param Bank $bank
+	 * @param User $user
+	 * @param KeyRing $keyRing
+	 *
+	 * @return BankLetter
+	 */
+	public function prepareBankLetter(Bank $bank, User $user, KeyRing $keyRing): BankLetter
+	{
+		if ($bank->isCertified()) {
+			if (Bank::VERSION_25 === $bank->getVersion()) {
+				$digestResolver = new DigestResolverV2();
+			} elseif (Bank::VERSION_30 === $bank->getVersion()) {
+				$digestResolver = new DigestResolverV3();
+			} else {
+				throw new LogicException(sprintf('Version "%s" is not implemented', $bank->getVersion()));
+			}
+			$hashGenerator = new CertificateHashGenerator($digestResolver);
+		} else {
+			$hashGenerator = new PublicKeyHashGenerator();
+		}
 
-        $bankLetter = $this->bankLetterFactory->create(
-            $bank,
-            $user,
-            $this->bankLetterService->formatSignatureForBankLetter(
-                $keyRing->getUserSignatureA(),
-                $keyRing->getUserSignatureAVersion(),
-                $hashGenerator
-            ),
-            $this->bankLetterService->formatSignatureForBankLetter(
-                $keyRing->getUserSignatureE(),
-                $keyRing->getUserSignatureEVersion(),
-                $hashGenerator
-            ),
-            $this->bankLetterService->formatSignatureForBankLetter(
-                $keyRing->getUserSignatureX(),
-                $keyRing->getUserSignatureXVersion(),
-                $hashGenerator
-            )
-        );
+		$bankLetter = $this->bankLetterFactory->create(
+			$bank,
+			$user,
+			$this->bankLetterService->formatSignatureForBankLetter(
+				$keyRing->getUserSignatureA(),
+				$keyRing->getUserSignatureAVersion(),
+				$hashGenerator
+			),
+			$this->bankLetterService->formatSignatureForBankLetter(
+				$keyRing->getUserSignatureE(),
+				$keyRing->getUserSignatureEVersion(),
+				$hashGenerator
+			),
+			$this->bankLetterService->formatSignatureForBankLetter(
+				$keyRing->getUserSignatureX(),
+				$keyRing->getUserSignatureXVersion(),
+				$hashGenerator
+			)
+		);
 
-        return $bankLetter;
-    }
+		return $bankLetter;
+	}
 
-    /**
-     * Format bank letter.
-     *
-     * @param BankLetter $bankLetter
-     * @param FormatterInterface $formatter
-     *
-     * @return mixed
-     */
-    public function formatBankLetter(BankLetter $bankLetter, FormatterInterface $formatter)
-    {
-        return $formatter->format($bankLetter);
-    }
+	/**
+	 * Format bank letter.
+	 *
+	 * @param BankLetter $bankLetter
+	 * @param FormatterInterface $formatter
+	 *
+	 * @return mixed
+	 */
+	public function formatBankLetter(BankLetter $bankLetter, FormatterInterface $formatter)
+	{
+		return $formatter->format($bankLetter);
+	}
 }

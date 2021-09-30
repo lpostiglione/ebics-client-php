@@ -11,33 +11,33 @@ use AndrewSvirin\Ebics\Models\User;
  * Class BankLetterFactory represents producers for the @see BankLetter.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class BankLetterFactory
 {
 
-    /**
-     * @param Bank $bank
-     * @param User $user
-     * @param SignatureBankLetter $signatureBankLetterA
-     * @param SignatureBankLetter $signatureBankLetterE
-     * @param SignatureBankLetter $signatureBankLetterX
-     *
-     * @return BankLetter
-     */
-    public function create(
-        Bank $bank,
-        User $user,
-        SignatureBankLetter $signatureBankLetterA,
-        SignatureBankLetter $signatureBankLetterE,
-        SignatureBankLetter $signatureBankLetterX
-    ): BankLetter {
-        return new BankLetter(
-            $bank,
-            $user,
-            $signatureBankLetterA,
-            $signatureBankLetterE,
-            $signatureBankLetterX
-        );
-    }
+	/**
+	 * @param Bank $bank
+	 * @param User $user
+	 * @param SignatureBankLetter $signatureBankLetterA
+	 * @param SignatureBankLetter $signatureBankLetterE
+	 * @param SignatureBankLetter $signatureBankLetterX
+	 *
+	 * @return BankLetter
+	 */
+	public function create(
+		Bank $bank,
+		User $user,
+		SignatureBankLetter $signatureBankLetterA,
+		SignatureBankLetter $signatureBankLetterE,
+		SignatureBankLetter $signatureBankLetterX
+	): BankLetter {
+		return new BankLetter(
+			$bank,
+			$user,
+			$signatureBankLetterA,
+			$signatureBankLetterE,
+			$signatureBankLetterX
+		);
+	}
 }

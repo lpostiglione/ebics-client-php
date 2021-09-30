@@ -18,47 +18,47 @@ use AndrewSvirin\Ebics\Services\DigestResolverV2;
  * Ebics 2.5 RequestFactory.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class RequestFactoryV2 extends RequestFactory
 {
-    /**
-     * Constructor.
-     *
-     * @param Bank $bank
-     * @param User $user
-     * @param KeyRing $keyRing
-     */
-    public function __construct(Bank $bank, User $user, KeyRing $keyRing)
-    {
-        $this->authSignatureHandler = new AuthSignatureHandlerV2($keyRing);
-        $this->userSignatureHandler = new UserSignatureHandler($user, $keyRing);
-        $this->orderDataHandler = new OrderDataHandlerV2($bank, $user, $keyRing);
-        $this->digestResolver = new DigestResolverV2();
-        parent::__construct($bank, $user, $keyRing);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param Bank $bank
+	 * @param User $user
+	 * @param KeyRing $keyRing
+	 */
+	public function __construct(Bank $bank, User $user, KeyRing $keyRing)
+	{
+		$this->authSignatureHandler = new AuthSignatureHandlerV2($keyRing);
+		$this->userSignatureHandler = new UserSignatureHandler($user, $keyRing);
+		$this->orderDataHandler = new OrderDataHandlerV2($bank, $user, $keyRing);
+		$this->digestResolver = new DigestResolverV2();
+		parent::__construct($bank, $user, $keyRing);
+	}
 
-    protected function createRequestBuilderInstance(): RequestBuilder
-    {
-        return $this->requestBuilder
-            ->createInstance(function (Request $request) {
-                return new XmlBuilderV2($request);
-            });
-    }
+	protected function createRequestBuilderInstance(): RequestBuilder
+	{
+		return $this->requestBuilder
+			->createInstance(function (Request $request) {
+				return new XmlBuilderV2($request);
+			});
+	}
 
-    protected function addOrderType(OrderDetailsBuilder $orderDetailsBuilder, string $orderType): OrderDetailsBuilder
-    {
-        switch ($orderType) {
-            case 'INI':
-            case 'HIA':
-                $orderAttribute = OrderDetailsBuilder::ORDER_ATTRIBUTE_DZNNN;
-                break;
-            default:
-                $orderAttribute = OrderDetailsBuilder::ORDER_ATTRIBUTE_DZHNN;
-        }
+	protected function addOrderType(OrderDetailsBuilder $orderDetailsBuilder, string $orderType): OrderDetailsBuilder
+	{
+		switch ($orderType) {
+			case 'INI':
+			case 'HIA':
+				$orderAttribute = OrderDetailsBuilder::ORDER_ATTRIBUTE_DZNNN;
+				break;
+			default:
+				$orderAttribute = OrderDetailsBuilder::ORDER_ATTRIBUTE_DZHNN;
+		}
 
-        return $orderDetailsBuilder
-            ->addOrderType($orderType)
-            ->addOrderAttribute($orderAttribute);
-    }
+		return $orderDetailsBuilder
+			->addOrderType($orderType)
+			->addOrderAttribute($orderAttribute);
+	}
 }

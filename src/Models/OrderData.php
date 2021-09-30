@@ -8,7 +8,7 @@ use AndrewSvirin\Ebics\Contracts\OrderDataInterface;
  * Class OrderData represents OrderData model.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class OrderData extends Data implements OrderDataInterface
 {

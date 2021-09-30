@@ -10,64 +10,63 @@ use DOMElement;
  * Class HeaderBuilder builder for request container.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class HeaderBuilder
 {
 
-    /**
-     * @var DOMElement
-     */
-    private $instance;
+	/**
+	 * @var DOMElement
+	 */
+	private $instance;
 
+	/**
+	 * @var DOMDocument
+	 */
+	private $dom;
 
-    /**
-     * @var DOMDocument
-     */
-    private $dom;
+	public function __construct(DOMDocument $dom = null)
+	{
+		$this->dom = $dom;
+	}
 
-    public function __construct(DOMDocument $dom = null)
-    {
-        $this->dom = $dom;
-    }
+	/**
+	 * Create body for UnsecuredRequest.
+	 *
+	 * @return $this
+	 */
+	public function createInstance(): HeaderBuilder
+	{
+		$this->instance = $this->dom->createElement('header');
+		$this->instance->setAttribute('authenticate', 'true');
 
-    /**
-     * Create body for UnsecuredRequest.
-     *
-     * @return $this
-     */
-    public function createInstance(): HeaderBuilder
-    {
-        $this->instance = $this->dom->createElement('header');
-        $this->instance->setAttribute('authenticate', 'true');
+		return $this;
+	}
 
-        return $this;
-    }
+	public function addStatic(Closure $callback): HeaderBuilder
+	{
+		$staticBuilder = new StaticBuilder($this->dom);
+		$this->instance->appendChild($staticBuilder->createInstance()->getInstance());
 
-    public function addStatic(Closure $callback): HeaderBuilder
-    {
-        $staticBuilder = new StaticBuilder($this->dom);
-        $this->instance->appendChild($staticBuilder->createInstance()->getInstance());
+		call_user_func($callback, $staticBuilder);
 
-        call_user_func($callback, $staticBuilder);
+		return $this;
+	}
 
-        return $this;
-    }
+	public function addMutable(Closure $callable = null): HeaderBuilder
+	{
+		$mutableBuilder = new MutableBuilder($this->dom);
+		$this->instance->appendChild($mutableBuilder->createInstance()->getInstance());
 
-    public function addMutable(Closure $callable = null): HeaderBuilder
-    {
-        $mutableBuilder = new MutableBuilder($this->dom);
-        $this->instance->appendChild($mutableBuilder->createInstance()->getInstance());
+		if (null !== $callable) {
+			call_user_func($callable, $mutableBuilder);
+		}
 
-        if (null !== $callable) {
-            call_user_func($callable, $mutableBuilder);
-        }
+		return $this;
+	}
 
-        return $this;
-    }
-
-    public function getInstance(): DOMElement
-    {
-        return $this->instance;
-    }
+	public function getInstance(): DOMElement
+	{
+		return $this->instance;
+	}
 }

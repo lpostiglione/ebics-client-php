@@ -9,65 +9,65 @@ use DOMElement;
  * Class MutableBuilder builder for request container.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class MutableBuilder
 {
 
-    const PHASE_INITIALIZATION = 'Initialisation';
-    const PHASE_RECEIPT = 'Receipt';
-    const PHASE_TRANSFER = 'Transfer';
+	const PHASE_INITIALIZATION = 'Initialisation';
+	const PHASE_RECEIPT = 'Receipt';
+	const PHASE_TRANSFER = 'Transfer';
 
-    /**
-     * @var DOMElement
-     */
-    private $instance;
+	/**
+	 * @var DOMElement
+	 */
+	private $instance;
 
-    /**
-     * @var DOMDocument
-     */
-    private $dom;
+	/**
+	 * @var DOMDocument
+	 */
+	private $dom;
 
-    public function __construct(DOMDocument $dom = null)
-    {
-        $this->dom = $dom;
-    }
+	public function __construct(DOMDocument $dom = null)
+	{
+		$this->dom = $dom;
+	}
 
-    /**
-     * Create body for UnsecuredRequest.
-     *
-     * @return $this
-     */
-    public function createInstance(): MutableBuilder
-    {
-        $this->instance = $this->dom->createElement('mutable');
+	/**
+	 * Create body for UnsecuredRequest.
+	 *
+	 * @return $this
+	 */
+	public function createInstance(): MutableBuilder
+	{
+		$this->instance = $this->dom->createElement('mutable');
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function addTransactionPhase(string $transactionPhase): MutableBuilder
-    {
-        $xmlTransactionPhase = $this->dom->createElement('TransactionPhase');
-        $xmlTransactionPhase->nodeValue = $transactionPhase;
+	public function addTransactionPhase(string $transactionPhase): MutableBuilder
+	{
+		$xmlTransactionPhase = $this->dom->createElement('TransactionPhase');
+		$xmlTransactionPhase->nodeValue = $transactionPhase;
 
-        $this->instance->appendChild($xmlTransactionPhase);
+		$this->instance->appendChild($xmlTransactionPhase);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function addSegmentNumber(int $segmentNumber): MutableBuilder
-    {
-        $xmlSegmentNumber = $this->dom->createElement('SegmentNumber');
-        $xmlSegmentNumber->setAttribute('lastSegment', 'true');
-        $xmlSegmentNumber->nodeValue = (string)$segmentNumber;
+	public function addSegmentNumber(int $segmentNumber): MutableBuilder
+	{
+		$xmlSegmentNumber = $this->dom->createElement('SegmentNumber');
+		$xmlSegmentNumber->setAttribute('lastSegment', 'true');
+		$xmlSegmentNumber->nodeValue = (string)$segmentNumber;
 
-        $this->instance->appendChild($xmlSegmentNumber);
+		$this->instance->appendChild($xmlSegmentNumber);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getInstance(): DOMElement
-    {
-        return $this->instance;
-    }
+	public function getInstance(): DOMElement
+	{
+		return $this->instance;
+	}
 }

@@ -13,280 +13,280 @@ use DateTimeInterface;
  * Class RequestContext context container for @see \AndrewSvirin\Ebics\Factories\RequestFactory
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class RequestContext
 {
 
-    /**
-     * @var Bank
-     */
-    private $bank;
+	/**
+	 * @var Bank
+	 */
+	private $bank;
 
-    /**
-     * @var User
-     */
-    private $user;
+	/**
+	 * @var User
+	 */
+	private $user;
 
-    /**
-     * @var KeyRing
-     */
-    private $keyRing;
+	/**
+	 * @var KeyRing
+	 */
+	private $keyRing;
 
-    /**
-     * @var DateTimeInterface
-     */
-    private $dateTime;
+	/**
+	 * @var DateTimeInterface
+	 */
+	private $dateTime;
 
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $startDateTime;
+	/**
+	 * @var DateTimeInterface|null
+	 */
+	private $startDateTime;
 
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $endDateTime;
+	/**
+	 * @var DateTimeInterface|null
+	 */
+	private $endDateTime;
 
-    /**
-     * @var string
-     */
-    private $fileFormat;
+	/**
+	 * @var string
+	 */
+	private $fileFormat;
 
-    /**
-     * @var string
-     */
-    private $countryCode;
+	/**
+	 * @var string
+	 */
+	private $countryCode;
 
-    /**
-     * @var string
-     */
-    private $receiptCode;
+	/**
+	 * @var string
+	 */
+	private $receiptCode;
 
-    /**
-     * @var int
-     */
-    private $segmentNumber;
+	/**
+	 * @var int
+	 */
+	private $segmentNumber;
 
-    /**
-     * @var string
-     */
-    private $transactionId;
+	/**
+	 * @var string
+	 */
+	private $transactionId;
 
-    /**
-     * @var string
-     */
-    private $transactionKey;
+	/**
+	 * @var string
+	 */
+	private $transactionKey;
 
-    /**
-     * @var int
-     */
-    private $numSegments;
+	/**
+	 * @var int
+	 */
+	private $numSegments;
 
-    /**
-     * @var OrderDataInterface
-     */
-    private $orderData;
+	/**
+	 * @var OrderDataInterface
+	 */
+	private $orderData;
 
-    /**
-     * @var SignatureDataInterface
-     */
-    private $signatureData;
+	/**
+	 * @var SignatureDataInterface
+	 */
+	private $signatureData;
 
-    /**
-     * @var BTFContext
-     */
-    private $btfContext;
+	/**
+	 * @var BTFContext
+	 */
+	private $btfContext;
 
-    public function setBank(Bank $bank): RequestContext
-    {
-        $this->bank = $bank;
+	public function setBank(Bank $bank): RequestContext
+	{
+		$this->bank = $bank;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getBank(): Bank
-    {
-        return $this->bank;
-    }
+	public function getBank(): Bank
+	{
+		return $this->bank;
+	}
 
-    public function setUser(User $user): RequestContext
-    {
-        $this->user = $user;
+	public function setUser(User $user): RequestContext
+	{
+		$this->user = $user;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
+	public function getUser(): User
+	{
+		return $this->user;
+	}
 
-    public function setKeyRing(KeyRing $keyRing): RequestContext
-    {
-        $this->keyRing = $keyRing;
+	public function setKeyRing(KeyRing $keyRing): RequestContext
+	{
+		$this->keyRing = $keyRing;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getKeyRing(): KeyRing
-    {
-        return $this->keyRing;
-    }
+	public function getKeyRing(): KeyRing
+	{
+		return $this->keyRing;
+	}
 
-    public function setDateTime(DateTimeInterface $dateTime): RequestContext
-    {
-        $this->dateTime = $dateTime;
+	public function setDateTime(DateTimeInterface $dateTime): RequestContext
+	{
+		$this->dateTime = $dateTime;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getDateTime(): DateTimeInterface
-    {
-        return $this->dateTime;
-    }
+	public function getDateTime(): DateTimeInterface
+	{
+		return $this->dateTime;
+	}
 
-    public function setStartDateTime(?DateTimeInterface $startDateTime): RequestContext
-    {
-        $this->startDateTime = $startDateTime;
+	public function setStartDateTime(?DateTimeInterface $startDateTime): RequestContext
+	{
+		$this->startDateTime = $startDateTime;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getStartDateTime(): ?DateTimeInterface
-    {
-        return $this->startDateTime;
-    }
+	public function getStartDateTime(): ?DateTimeInterface
+	{
+		return $this->startDateTime;
+	}
 
-    public function setEndDateTime(?DateTimeInterface $endDateTime): RequestContext
-    {
-        $this->endDateTime = $endDateTime;
+	public function setEndDateTime(?DateTimeInterface $endDateTime): RequestContext
+	{
+		$this->endDateTime = $endDateTime;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getEndDateTime(): ?DateTimeInterface
-    {
-        return $this->endDateTime;
-    }
+	public function getEndDateTime(): ?DateTimeInterface
+	{
+		return $this->endDateTime;
+	}
 
-    public function setFileFormat(string $fileFormat): RequestContext
-    {
-        $this->fileFormat = $fileFormat;
+	public function setFileFormat(string $fileFormat): RequestContext
+	{
+		$this->fileFormat = $fileFormat;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getFileFormat(): string
-    {
-        return $this->fileFormat;
-    }
+	public function getFileFormat(): string
+	{
+		return $this->fileFormat;
+	}
 
-    public function setCountryCode(string $countryCode): RequestContext
-    {
-        $this->countryCode = $countryCode;
+	public function setCountryCode(string $countryCode): RequestContext
+	{
+		$this->countryCode = $countryCode;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCountryCode(): string
-    {
-        return $this->countryCode;
-    }
+	public function getCountryCode(): string
+	{
+		return $this->countryCode;
+	}
 
-    public function setReceiptCode(string $receiptCode): RequestContext
-    {
-        $this->receiptCode = $receiptCode;
+	public function setReceiptCode(string $receiptCode): RequestContext
+	{
+		$this->receiptCode = $receiptCode;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getReceiptCode(): string
-    {
-        return $this->receiptCode;
-    }
+	public function getReceiptCode(): string
+	{
+		return $this->receiptCode;
+	}
 
-    public function setSegmentNumber(int $segmentNumber): RequestContext
-    {
-        $this->segmentNumber = $segmentNumber;
+	public function setSegmentNumber(int $segmentNumber): RequestContext
+	{
+		$this->segmentNumber = $segmentNumber;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getSegmentNumber(): int
-    {
-        return $this->segmentNumber;
-    }
+	public function getSegmentNumber(): int
+	{
+		return $this->segmentNumber;
+	}
 
-    public function setTransactionId(string $transactionId): RequestContext
-    {
-        $this->transactionId = $transactionId;
+	public function setTransactionId(string $transactionId): RequestContext
+	{
+		$this->transactionId = $transactionId;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getTransactionId(): string
-    {
-        return $this->transactionId;
-    }
+	public function getTransactionId(): string
+	{
+		return $this->transactionId;
+	}
 
-    public function setTransactionKey(string $transactionKey): RequestContext
-    {
-        $this->transactionKey = $transactionKey;
+	public function setTransactionKey(string $transactionKey): RequestContext
+	{
+		$this->transactionKey = $transactionKey;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getTransactionKey(): string
-    {
-        return $this->transactionKey;
-    }
+	public function getTransactionKey(): string
+	{
+		return $this->transactionKey;
+	}
 
-    public function setNumSegments(int $numSegments): RequestContext
-    {
-        $this->numSegments = $numSegments;
+	public function setNumSegments(int $numSegments): RequestContext
+	{
+		$this->numSegments = $numSegments;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getNumSegments(): int
-    {
-        return $this->numSegments;
-    }
+	public function getNumSegments(): int
+	{
+		return $this->numSegments;
+	}
 
-    public function setOrderData(OrderDataInterface $orderData): RequestContext
-    {
-        $this->orderData = $orderData;
+	public function setOrderData(OrderDataInterface $orderData): RequestContext
+	{
+		$this->orderData = $orderData;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getOrderData(): OrderDataInterface
-    {
-        return $this->orderData;
-    }
+	public function getOrderData(): OrderDataInterface
+	{
+		return $this->orderData;
+	}
 
-    public function setSignatureData(SignatureDataInterface $signatureData): RequestContext
-    {
-        $this->signatureData = $signatureData;
+	public function setSignatureData(SignatureDataInterface $signatureData): RequestContext
+	{
+		$this->signatureData = $signatureData;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getSignatureData(): SignatureDataInterface
-    {
-        return $this->signatureData;
-    }
+	public function getSignatureData(): SignatureDataInterface
+	{
+		return $this->signatureData;
+	}
 
-    public function setBTFContext(BTFContext $btfContext): RequestContext
-    {
-        $this->btfContext = $btfContext;
+	public function setBTFContext(BTFContext $btfContext): RequestContext
+	{
+		$this->btfContext = $btfContext;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getBTFContext(): BTFContext
-    {
-        return $this->btfContext;
-    }
+	public function getBTFContext(): BTFContext
+	{
+		return $this->btfContext;
+	}
 }

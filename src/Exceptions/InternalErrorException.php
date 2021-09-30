@@ -6,16 +6,16 @@ namespace AndrewSvirin\Ebics\Exceptions;
  * InternalErrorException used for 061099 EBICS error
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Guillaume Sainthillier
+ * @author  Guillaume Sainthillier
  */
 class InternalErrorException extends EbicsResponseException
 {
-    public function __construct(?string $responseMessage = null)
-    {
-        parent::__construct(
-            '061099',
-            $responseMessage,
-            'An internal error occurred when processing an EBICS request.'
-        );
-    }
+	public function __construct(?string $responseMessage = null)
+	{
+		parent::__construct(
+			'061099',
+			$responseMessage,
+			'An internal error occurred when processing an EBICS request.'
+		);
+	}
 }

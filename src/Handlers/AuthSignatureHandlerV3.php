@@ -10,16 +10,16 @@ use DOMXPath;
  * Ebics 2.5 AuthSignatureHandler.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  *
  * @internal
  */
 class AuthSignatureHandlerV3 extends AuthSignatureHandler
 {
-    use XPathTrait;
+	use XPathTrait;
 
-    protected function prepareH00XXPath(DOMDocument $request): DOMXPath
-    {
-        return $this->prepareH005XPath($request);
-    }
+	protected function prepareH00XXPath(DOMDocument $request): DOMXPath
+	{
+		return $this->prepareH005XPath($request);
+	}
 }

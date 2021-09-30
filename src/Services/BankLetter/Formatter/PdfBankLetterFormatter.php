@@ -10,38 +10,38 @@ use AndrewSvirin\Ebics\Models\BankLetter;
  * Bank letter PDF formatter.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  *
  * @internal
  */
 class PdfBankLetterFormatter implements FormatterInterface
 {
 
-    /**
-     * @var HtmlBankLetterFormatter
-     */
-    private $bankLetterFormatterHtml;
+	/**
+	 * @var HtmlBankLetterFormatter
+	 */
+	private $bankLetterFormatterHtml;
 
-    /**
-     * @var PdfFactory
-     */
-    private $pdfFactory;
+	/**
+	 * @var PdfFactory
+	 */
+	private $pdfFactory;
 
-    public function __construct()
-    {
-        $this->bankLetterFormatterHtml = new HtmlBankLetterFormatter();
-        $this->pdfFactory = new PdfFactory();
-    }
+	public function __construct()
+	{
+		$this->bankLetterFormatterHtml = new HtmlBankLetterFormatter();
+		$this->pdfFactory = new PdfFactory();
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function format(BankLetter $bankLetter)
-    {
-        $html = $this->bankLetterFormatterHtml->format($bankLetter);
+	/**
+	 * @inheritDoc
+	 */
+	public function format(BankLetter $bankLetter)
+	{
+		$html = $this->bankLetterFormatterHtml->format($bankLetter);
 
-        $pdf = $this->pdfFactory->createFromHtml($html);
+		$pdf = $this->pdfFactory->createFromHtml($html);
 
-        return $pdf->outputString();
-    }
+		return $pdf->outputString();
+	}
 }

@@ -10,57 +10,57 @@ use AndrewSvirin\Ebics\Services\CryptService;
  * Generate hash for public key.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  *
  * @internal
  */
 class PublicKeyHashGenerator implements HashGeneratorInterface
 {
 
-    /**
-     * @var CryptService
-     */
-    private $cryptService;
+	/**
+	 * @var CryptService
+	 */
+	private $cryptService;
 
-    public function __construct()
-    {
-        $this->cryptService = new CryptService();
-    }
+	public function __construct()
+	{
+		$this->cryptService = new CryptService();
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function generate(SignatureInterface $signature): string
-    {
-        $publicKeyDetails = $this->cryptService->getPublicKeyDetails($signature->getPublicKey());
+	/**
+	 * @inheritDoc
+	 */
+	public function generate(SignatureInterface $signature): string
+	{
+		$publicKeyDetails = $this->cryptService->getPublicKeyDetails($signature->getPublicKey());
 
-        $e = $this->formatBytesToHex($publicKeyDetails['e']);
-        $m = $this->formatBytesToHex($publicKeyDetails['m']);
+		$e = $this->formatBytesToHex($publicKeyDetails['e']);
+		$m = $this->formatBytesToHex($publicKeyDetails['m']);
 
-        $key = $this->cryptService->calculateKey($e, $m);
+		$key = $this->cryptService->calculateKey($e, $m);
 
-        $hash = $this->cryptService->calculateKeyHash($key);
+		$hash = $this->cryptService->calculateKeyHash($key);
 
-        return $hash;
-    }
+		return $hash;
+	}
 
-    /**
-     * Convert bytes to hex.
-     *
-     * @param string $bytes Bytes
-     *
-     * @return string
-     */
-    private function formatBytesToHex(string $bytes): string
-    {
-        $out = '';
+	/**
+	 * Convert bytes to hex.
+	 *
+	 * @param string $bytes Bytes
+	 *
+	 * @return string
+	 */
+	private function formatBytesToHex(string $bytes): string
+	{
+		$out = '';
 
-        // Go over pairs of bytes.
-        foreach ($this->cryptService->binToArray($bytes) as $byte) {
-            // Convert to lover case hexadecimal number.
-            $out .= sprintf("%02x", $byte);
-        }
+		// Go over pairs of bytes.
+		foreach ($this->cryptService->binToArray($bytes) as $byte) {
+			// Convert to lover case hexadecimal number.
+			$out .= sprintf("%02x", $byte);
+		}
 
-        return trim($out);
-    }
+		return trim($out);
+	}
 }

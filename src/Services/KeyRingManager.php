@@ -15,65 +15,65 @@ use AndrewSvirin\Ebics\Models\KeyRing;
  * same key dictionary a singleton instance is created.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class KeyRingManager implements KeyRingManagerInterface
 {
-    /**
-     * The path to a key file.
-     *
-     * @var string
-     */
-    private $keyRingRealPath;
+	/**
+	 * The path to a key file.
+	 *
+	 * @var string
+	 */
+	private $keyRingRealPath;
 
-    /**
-     * The passphrase by which all private keys are encrypted/decrypted.
-     *
-     * @var string
-     */
-    private $password;
+	/**
+	 * The passphrase by which all private keys are encrypted/decrypted.
+	 *
+	 * @var string
+	 */
+	private $password;
 
-    /**
-     * @var KeyRingFactory
-     */
-    private $keyRingFactory;
+	/**
+	 * @var KeyRingFactory
+	 */
+	private $keyRingFactory;
 
-    /**
-     * Constructor.
-     *
-     * @param string $keyRingRealPath
-     * @param string $passphrase
-     */
-    public function __construct(string $keyRingRealPath, string $passphrase)
-    {
-        $this->keyRingRealPath = $keyRingRealPath;
-        $this->password = $passphrase;
-        $this->keyRingFactory = new KeyRingFactory();
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param string $keyRingRealPath
+	 * @param string $passphrase
+	 */
+	public function __construct(string $keyRingRealPath, string $passphrase)
+	{
+		$this->keyRingRealPath = $keyRingRealPath;
+		$this->password = $passphrase;
+		$this->keyRingFactory = new KeyRingFactory();
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function loadKeyRing(): KeyRing
-    {
-        if (is_file($this->keyRingRealPath) &&
-            ($content = file_get_contents($this->keyRingRealPath)) &&
-            !empty($content)) {
-            $result = $this->keyRingFactory->createKeyRingFromData(json_decode($content, true));
-        } else {
-            $result = new KeyRing();
-        }
-        $result->setPassword($this->password);
+	/**
+	 * @inheritDoc
+	 */
+	public function loadKeyRing(): KeyRing
+	{
+		if (is_file($this->keyRingRealPath) &&
+			($content = file_get_contents($this->keyRingRealPath)) &&
+			!empty($content)) {
+			$result = $this->keyRingFactory->createKeyRingFromData(json_decode($content, true));
+		} else {
+			$result = new KeyRing();
+		}
+		$result->setPassword($this->password);
 
-        return $result;
-    }
+		return $result;
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function saveKeyRing(KeyRing $keyRing): void
-    {
-        $data = $this->keyRingFactory->buildDataFromKeyRing($keyRing);
-        file_put_contents($this->keyRingRealPath, json_encode($data, JSON_PRETTY_PRINT));
-    }
+	/**
+	 * @inheritDoc
+	 */
+	public function saveKeyRing(KeyRing $keyRing): void
+	{
+		$data = $this->keyRingFactory->buildDataFromKeyRing($keyRing);
+		file_put_contents($this->keyRingRealPath, json_encode($data, JSON_PRETTY_PRINT));
+	}
 }

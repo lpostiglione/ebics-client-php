@@ -6,16 +6,16 @@ namespace AndrewSvirin\Ebics\Exceptions;
  * OrderidUnknownException used for 091114 EBICS error
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Guillaume Sainthillier
+ * @author  Guillaume Sainthillier
  */
 class OrderidUnknownException extends EbicsResponseException
 {
-    public function __construct(?string $responseMessage = null)
-    {
-        parent::__construct(
-            '091114',
-            $responseMessage,
-            'Upon verification, the bank finds that the order is not located in the VEU processing system.'
-        );
-    }
+	public function __construct(?string $responseMessage = null)
+	{
+		parent::__construct(
+			'091114',
+			$responseMessage,
+			'Upon verification, the bank finds that the order is not located in the VEU processing system.'
+		);
+	}
 }

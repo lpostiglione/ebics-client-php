@@ -6,16 +6,16 @@ namespace AndrewSvirin\Ebics\Exceptions;
  * X509InvalidPolicyException used for 091215 EBICS error
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Guillaume Sainthillier
+ * @author  Guillaume Sainthillier
  */
 class X509InvalidPolicyException extends EbicsResponseException
 {
-    public function __construct(?string $responseMessage = null)
-    {
-        parent::__construct(
-            '091215',
-            $responseMessage,
-            'The certificate has invalid policy when determining certificate verification.'
-        );
-    }
+	public function __construct(?string $responseMessage = null)
+	{
+		parent::__construct(
+			'091215',
+			$responseMessage,
+			'The certificate has invalid policy when determining certificate verification.'
+		);
+	}
 }

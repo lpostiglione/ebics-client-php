@@ -7,143 +7,143 @@ namespace AndrewSvirin\Ebics\Contexts;
  * Class BTFContext context container for BTD orders - requires EBICS 3.0
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Geoffroy de Corbiac
+ * @author  Geoffroy de Corbiac
  */
 class BTFContext
 {
-    /**
-     * @var string
-     */
-    private $serviceName;
+	/**
+	 * @var string
+	 */
+	private $serviceName;
 
-    /**
-     * @var string
-     */
-    private $msgName;
+	/**
+	 * @var string
+	 */
+	private $msgName;
 
-    /**
-     * @var string
-     */
-    private $scope;
+	/**
+	 * @var string
+	 */
+	private $scope;
 
-    /**
-     * @var string
-     */
-    private $serviceOption;
+	/**
+	 * @var string
+	 */
+	private $serviceOption;
 
-    /**
-     * @var string
-     */
-    private $containerFlag;
+	/**
+	 * @var string
+	 */
+	private $containerFlag;
 
-    /**
-     * @var string
-     */
-    private $msgNameVariant;
+	/**
+	 * @var string
+	 */
+	private $msgNameVariant;
 
-    /**
-     * @var string
-     */
-    private $msgNameVersion;
+	/**
+	 * @var string
+	 */
+	private $msgNameVersion;
 
-    /**
-     * @var string
-     */
-    private $msgNameFormat;
+	/**
+	 * @var string
+	 */
+	private $msgNameFormat;
 
-    public function setServiceName(string $serviceName): BTFContext
-    {
-        $this->serviceName = $serviceName;
+	public function setServiceName(string $serviceName): BTFContext
+	{
+		$this->serviceName = $serviceName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getServiceName(): string
-    {
-        return $this->serviceName;
-    }
+	public function getServiceName(): string
+	{
+		return $this->serviceName;
+	}
 
-    public function setMsgName(string $msgName): BTFContext
-    {
-        $this->msgName = $msgName;
+	public function setMsgName(string $msgName): BTFContext
+	{
+		$this->msgName = $msgName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getMsgName(): string
-    {
-        return $this->msgName;
-    }
+	public function getMsgName(): string
+	{
+		return $this->msgName;
+	}
 
-    public function setScope(string $scope): BTFContext
-    {
-        $this->scope = $scope;
+	public function setScope(string $scope): BTFContext
+	{
+		$this->scope = $scope;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getScope(): ?string
-    {
-        return $this->scope;
-    }
+	public function getScope(): ?string
+	{
+		return $this->scope;
+	}
 
-    public function setServiceOption(string $serviceOption): BTFContext
-    {
-        $this->serviceOption = $serviceOption;
+	public function setServiceOption(string $serviceOption): BTFContext
+	{
+		$this->serviceOption = $serviceOption;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getServiceOption(): ?string
-    {
-        return $this->serviceOption;
-    }
+	public function getServiceOption(): ?string
+	{
+		return $this->serviceOption;
+	}
 
-    public function setContainerFlag(string $containerFlag): BTFContext
-    {
-        $this->containerFlag = $containerFlag;
+	public function setContainerFlag(string $containerFlag): BTFContext
+	{
+		$this->containerFlag = $containerFlag;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getContainerFlag(): ?string
-    {
-        return $this->containerFlag;
-    }
+	public function getContainerFlag(): ?string
+	{
+		return $this->containerFlag;
+	}
 
-    public function setMsgNameVariant(string $msgNameVariant): BTFContext
-    {
-        $this->msgNameVariant = $msgNameVariant;
+	public function setMsgNameVariant(string $msgNameVariant): BTFContext
+	{
+		$this->msgNameVariant = $msgNameVariant;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getMsgNameVariant(): ?string
-    {
-        return $this->msgNameVariant;
-    }
+	public function getMsgNameVariant(): ?string
+	{
+		return $this->msgNameVariant;
+	}
 
-    public function setMsgNameVersion(string $msgNameVersion): BTFContext
-    {
-        $this->msgNameVersion = $msgNameVersion;
+	public function setMsgNameVersion(string $msgNameVersion): BTFContext
+	{
+		$this->msgNameVersion = $msgNameVersion;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getMsgNameVersion(): ?string
-    {
-        return $this->msgNameVersion;
-    }
+	public function getMsgNameVersion(): ?string
+	{
+		return $this->msgNameVersion;
+	}
 
-    public function setMsgNameFormat(string $msgNameFormat): BTFContext
-    {
-        $this->msgNameFormat = $msgNameFormat;
+	public function setMsgNameFormat(string $msgNameFormat): BTFContext
+	{
+		$this->msgNameFormat = $msgNameFormat;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getMsgNameFormat(): ?string
-    {
-        return $this->msgNameFormat;
-    }
+	public function getMsgNameFormat(): ?string
+	{
+		return $this->msgNameFormat;
+	}
 }

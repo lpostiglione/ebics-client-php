@@ -12,91 +12,91 @@ use DOMElement;
  * Class DataEncryptionInfoBuilder builder for request container.
  *
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @author Andrew Svirin
+ * @author  Andrew Svirin
  */
 class DataEncryptionInfoBuilder
 {
 
-    /**
-     * @var DOMElement
-     */
-    private $instance;
+	/**
+	 * @var DOMElement
+	 */
+	private $instance;
 
-    /**
-     * @var DOMDocument
-     */
-    private $dom;
+	/**
+	 * @var DOMDocument
+	 */
+	private $dom;
 
-    /**
-     * @var CryptService
-     */
-    private $cryptService;
+	/**
+	 * @var CryptService
+	 */
+	private $cryptService;
 
-    public function __construct(DOMDocument $dom = null)
-    {
-        $this->dom = $dom;
-        $this->cryptService = new CryptService();
-    }
+	public function __construct(DOMDocument $dom = null)
+	{
+		$this->dom = $dom;
+		$this->cryptService = new CryptService();
+	}
 
-    /**
-     * Create body for UnsecuredRequest.
-     *
-     * @return $this
-     */
-    public function createInstance(): DataEncryptionInfoBuilder
-    {
-        $this->instance = $this->dom->createElement('DataEncryptionInfo');
-        $this->instance->setAttribute('authenticate', 'true');
+	/**
+	 * Create body for UnsecuredRequest.
+	 *
+	 * @return $this
+	 */
+	public function createInstance(): DataEncryptionInfoBuilder
+	{
+		$this->instance = $this->dom->createElement('DataEncryptionInfo');
+		$this->instance->setAttribute('authenticate', 'true');
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Uses bank signature.
-     *
-     * @param KeyRing $keyRing
-     * @param string $algorithm
-     *
-     * @return $this
-     * @throws EbicsException
-     */
-    public function addEncryptionPubKeyDigest(KeyRing $keyRing, string $algorithm = 'sha256'): DataEncryptionInfoBuilder
-    {
-        if (!($signatureE = $keyRing->getBankSignatureE())) {
-            throw new EbicsException('Bank Certificate E is empty.');
-        }
-        $certificateEDigest = $this->cryptService->calculateDigest($signatureE, $algorithm, true);
-        $encryptionPubKeyDigestNodeValue =  base64_encode($certificateEDigest);
+	/**
+	 * Uses bank signature.
+	 *
+	 * @param KeyRing $keyRing
+	 * @param string $algorithm
+	 *
+	 * @return $this
+	 * @throws EbicsException
+	 */
+	public function addEncryptionPubKeyDigest(KeyRing $keyRing, string $algorithm = 'sha256'): DataEncryptionInfoBuilder
+	{
+		if (!($signatureE = $keyRing->getBankSignatureE())) {
+			throw new EbicsException('Bank Certificate E is empty.');
+		}
+		$certificateEDigest = $this->cryptService->calculateDigest($signatureE, $algorithm, true);
+		$encryptionPubKeyDigestNodeValue = base64_encode($certificateEDigest);
 
-        $xmlEncryptionPubKeyDigest = $this->dom->createElement('EncryptionPubKeyDigest');
-        $xmlEncryptionPubKeyDigest->setAttribute('Version', $keyRing->getBankSignatureEVersion());
-        $xmlEncryptionPubKeyDigest->setAttribute(
-            'Algorithm',
-            sprintf('http://www.w3.org/2001/04/xmlenc#%s', $algorithm)
-        );
-        $xmlEncryptionPubKeyDigest->nodeValue = $encryptionPubKeyDigestNodeValue;
-        $this->instance->appendChild($xmlEncryptionPubKeyDigest);
+		$xmlEncryptionPubKeyDigest = $this->dom->createElement('EncryptionPubKeyDigest');
+		$xmlEncryptionPubKeyDigest->setAttribute('Version', $keyRing->getBankSignatureEVersion());
+		$xmlEncryptionPubKeyDigest->setAttribute(
+			'Algorithm',
+			sprintf('http://www.w3.org/2001/04/xmlenc#%s', $algorithm)
+		);
+		$xmlEncryptionPubKeyDigest->nodeValue = $encryptionPubKeyDigestNodeValue;
+		$this->instance->appendChild($xmlEncryptionPubKeyDigest);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function addTransactionKey(string $transactionKey, KeyRing $keyRing): DataEncryptionInfoBuilder
-    {
-        $transactionKeyEncrypted = $this->cryptService->encryptTransactionKey(
-            $keyRing->getBankSignatureE()->getPublicKey(),
-            $transactionKey
-        );
-        $transactionKeyNodeValue = base64_encode($transactionKeyEncrypted);
+	public function addTransactionKey(string $transactionKey, KeyRing $keyRing): DataEncryptionInfoBuilder
+	{
+		$transactionKeyEncrypted = $this->cryptService->encryptTransactionKey(
+			$keyRing->getBankSignatureE()->getPublicKey(),
+			$transactionKey
+		);
+		$transactionKeyNodeValue = base64_encode($transactionKeyEncrypted);
 
-        $xmlTransactionKey = $this->dom->createElement('TransactionKey');
-        $xmlTransactionKey->nodeValue = $transactionKeyNodeValue;
-        $this->instance->appendChild($xmlTransactionKey);
+		$xmlTransactionKey = $this->dom->createElement('TransactionKey');
+		$xmlTransactionKey->nodeValue = $transactionKeyNodeValue;
+		$this->instance->appendChild($xmlTransactionKey);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getInstance(): DOMElement
-    {
-        return $this->instance;
-    }
+	public function getInstance(): DOMElement
+	{
+		return $this->instance;
+	}
 }
