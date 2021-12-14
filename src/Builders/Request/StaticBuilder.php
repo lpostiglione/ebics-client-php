@@ -99,6 +99,15 @@ class StaticBuilder
 		return $this;
 	}
 
+	public function addSignatureValue(string $signatureValue): StaticBuilder
+	{
+		$xmlVeuMessageDigest = $this->dom->createElement('VeuMessageDigest');
+		$xmlVeuMessageDigest->nodeValue = $signatureValue;
+		$this->instance->appendChild($xmlVeuMessageDigest);
+
+		return $this;
+	}
+
 	public function addProduct(string $product, string $language): StaticBuilder
 	{
 		$xmlProduct = $this->dom->createElement('Product');

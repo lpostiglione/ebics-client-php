@@ -189,7 +189,9 @@ class CustomerDirectDebitBuilder
 		string $debitorName,
 		float $amount,
 		string $currency,
-		string $purpose
+		string $purpose,
+		string $mendateRef,
+		string $mendateDate
 	): CustomerDirectDebitBuilder {
 		$xpath = $this->prepareXPath($this->instance);
 		$nbOfTxsList = $xpath->query('//CstmrDrctDbtInitn/PmtInf/NbOfTxs');
@@ -232,11 +234,11 @@ class CustomerDirectDebitBuilder
 		$xmlDrctDbtTx->appendChild($xmlMndtRltdInf);
 
 		$xmlMndtId = $this->instance->createElement('MndtId');
-		$xmlMndtId->nodeValue = '1';
+		$xmlMndtId->nodeValue = $mendateRef;
 		$xmlMndtRltdInf->appendChild($xmlMndtId);
 
 		$xmlDtOfSgntr = $this->instance->createElement('DtOfSgntr');
-		$xmlDtOfSgntr->nodeValue = $reqdColltnDt;
+		$xmlDtOfSgntr->nodeValue = $mendateDate;
 		$xmlMndtRltdInf->appendChild($xmlDtOfSgntr);
 
 		$xmlDbtrAgt = $this->instance->createElement('DbtrAgt');

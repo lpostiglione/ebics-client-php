@@ -293,6 +293,38 @@ final class EbicsClient implements EbicsClientInterface
 	 * @inheritDoc
 	 * @throws Exceptions\EbicsException
 	 */
+	public function HVZ(DateTimeInterface $dateTime = null): Response
+	{
+		if (null === $dateTime) {
+			$dateTime = new DateTime();
+		}
+		$request = $this->requestFactory->createHVZ($dateTime);
+		$response = $this->httpClient->post($this->bank->getUrl(), $request);
+
+		return $response;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @throws Exceptions\EbicsException
+	 */
+	public function HVE(string $signatureValue,DateTimeInterface $dateTime = null): Response
+	{
+		if (null === $dateTime) {
+			$dateTime = new DateTime();
+		}
+		$request = $this->requestFactory->createHVE($dateTime,$signatureValue);
+		var_dump($request->getFormattedContent());DIE;
+
+		$response = $this->httpClient->post($this->bank->getUrl(), $request);
+
+		return $response;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @throws Exceptions\EbicsException
+	 */
 	public function HTD(DateTimeInterface $dateTime = null): Response
 	{
 		if (null === $dateTime) {

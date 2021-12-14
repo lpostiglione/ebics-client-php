@@ -1190,4 +1190,94 @@ abstract class RequestFactory
 
 		return $request;
 	}
+
+
+	public function createHVZ(DateTimeInterface $dateTime){
+		$context = (new RequestContext())
+			->setBank($this->bank)
+			->setUser($this->user)
+			->setKeyRing($this->keyRing)
+			->setDateTime($dateTime);
+
+		$request = $this
+			->createRequestBuilderInstance()
+			->addContainerSecured(function (XmlBuilder $builder) use ($context) {
+				$builder->addHeader(function (HeaderBuilder $builder) use ($context) {
+					$builder->addStatic(function (StaticBuilder $builder) use ($context) {
+						$builder
+							->addHostId($context->getBank()->getHostId())
+							->addRandomNonce()
+							->addTimestamp($context->getDateTime())
+							->addPartnerId($context->getUser()->getPartnerId())
+							->addUserId($context->getUser()->getUserId())
+							->addProduct('Ebics client PHP', 'de')
+							->addOrderDetails(function (OrderDetailsBuilder $orderDetailsBuilder) {
+								$this
+									->addOrderType($orderDetailsBuilder, 'HVZ')
+									->addStandardOrderParams();
+							})
+							->addBankPubKeyDigests(
+								$context->getKeyRing()->getBankSignatureXVersion(),
+								$this->digestResolver->digest($context->getKeyRing()->getBankSignatureX()),
+								$context->getKeyRing()->getBankSignatureEVersion(),
+								$this->digestResolver->digest($context->getKeyRing()->getBankSignatureE())
+							)
+							->addSecurityMedium(StaticBuilder::SECURITY_MEDIUM_0000);
+					})->addMutable(function (MutableBuilder $builder) {
+						$builder->addTransactionPhase(MutableBuilder::PHASE_INITIALIZATION);
+					});
+				})->addBody();
+			})
+			->popInstance();
+
+		$this->authSignatureHandler->handle($request);
+
+		return $request;
+	}
+
+	public function createHVE(DateTimeInterface $dateTime, string $signatureValue){
+		$context = (new RequestContext())
+			->setBank($this->bank)
+			->setUser($this->user)
+			->setKeyRing($this->keyRing)
+			->setSignatureValue($signatureValue)
+			->setDateTime($dateTime);
+
+		$request = $this
+			->createRequestBuilderInstance()
+			->addContainerSecured(function (XmlBuilder $builder) use ($context) {
+				$builder->addHeader(function (HeaderBuilder $builder) use ($context) {
+					$builder->addStatic(function (StaticBuilder $builder) use ($context) {
+						$builder
+							->addHostId($context->getBank()->getHostId())
+							->addRandomNonce()
+							->addTimestamp($context->getDateTime())
+							->addPartnerId($context->getUser()->getPartnerId())
+							->addUserId($context->getUser()->getUserId())
+							->addProduct('Ebics client PHP', 'de')
+							->addSignatureValue($context->getSignatureValue())
+							->addOrderDetails(function (OrderDetailsBuilder $orderDetailsBuilder) {
+								$this
+									->addOrderType($orderDetailsBuilder, 'HVE')
+									->addStandardOrderParams();
+							})
+							->addBankPubKeyDigests(
+								$context->getKeyRing()->getBankSignatureXVersion(),
+								$this->digestResolver->digest($context->getKeyRing()->getBankSignatureX()),
+								$context->getKeyRing()->getBankSignatureEVersion(),
+								$this->digestResolver->digest($context->getKeyRing()->getBankSignatureE())
+							)
+							->addSecurityMedium(StaticBuilder::SECURITY_MEDIUM_0000);
+					})->addMutable(function (MutableBuilder $builder) {
+						$builder->addTransactionPhase(MutableBuilder::PHASE_INITIALIZATION);
+					});
+				})->addBody();
+			})
+			->popInstance();
+
+		$this->authSignatureHandler->handle($request);
+
+		return $request;
+	}
+
 }

@@ -62,6 +62,10 @@ class RequestContext
 	 * @var string
 	 */
 	private $receiptCode;
+	/**
+	 * @var string
+	 */
+	private $signatureValue;
 
 	/**
 	 * @var int
@@ -204,6 +208,18 @@ class RequestContext
 	public function getReceiptCode(): string
 	{
 		return $this->receiptCode;
+	}
+
+	public function setSignatureValue(string $signatureValue): RequestContext
+	{
+		$this->signatureValue = $signatureValue;
+
+		return $this;
+	}
+
+	public function getSignatureValue(): string
+	{
+		return $this->signatureValue;
 	}
 
 	public function setSegmentNumber(int $segmentNumber): RequestContext
